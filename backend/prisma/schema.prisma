@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  employeeId    String   @unique
+  name          String
+  email         String?  @unique
+  mobile        String?  @unique
+  passwordHash  String
+  role          String   @default("worker")
+  status        String   @default("active")
+  teamId        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  assignedTasks Task[]   @relation("AssignedTasks")
+  team          Team?    @relation("TeamMembers", fields: [teamId], references: [id])
+  teamLead      Team[]   @relation("TeamLead")
+}
+
+model Team {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  leadId    String?
+  lead      User?    @relation("TeamLead", fields: [leadId], references: [id])
+  members   User[]   @relation("TeamMembers")
+  tasks     Task[]   @relation("Tasks")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id              String   @id @default(cuid())
+  taskId          String   @unique
+  title           String
+  description     String?
+  location        String
+  latitude        Float?
+  longitude       Float?
+  priority        String   @default("MEDIUM")
+  status          String   @default("assigned")
+  requiredSkill   String?
+  scheduledDate   DateTime
+  startTime       String
+  endTime         String
+  reportId        String?
+  workerId        String?
+  teamId          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  worker          User?    @relation("AssignedTasks", fields: [workerId], references: [id])
+  team            Team?    @relation("Tasks", fields: [teamId], references: [id])
+
+  @@index([workerId])
+  @@index([teamId])
+  @@index([scheduledDate])
+  @@index([status])
+}
+
+model Citizen {
+  id            String   @id @default(cuid())
+  authUserId    String   @unique @map("auth_user_id")
+  name          String
+  email         String   @unique
+  role          String   @default("citizen")
+  status        String   @default("active")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  reports       Report[]
+
+  @@map("citizens")
+}
+
+model Report {
+  id              String   @id @default(cuid())
+  reportNumber    String   @unique @map("report_number")
+  citizenId       String   @map("citizen_id")
+  title           String
+  description     String?
+  locationText    String   @map("location_text")
+  googleMapsUrl   String?  @map("google_maps_url")
+  latitude        Float?
+  longitude       Float?
+  imagePath       String?  @map("image_path")
+  imageUrl        String?  @map("image_url")
+  imageSize       Int?     @map("image_size")
+  status          String   @default("submitted")
+  rejectionReason String?  @map("rejection_reason")
+  expiresAt       DateTime @default(now())
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  citizen         Citizen  @relation(fields: [citizenId], references: [id])
+
+  @@index([citizenId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("reports")
+}

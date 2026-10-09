@@ -1,0 +1,109 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@theme {
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+
+  --color-surface-50: #fafafa;
+  --color-surface-100: #f5f5f5;
+  --color-surface-200: #e5e5e5;
+  --color-surface-300: #d4d4d4;
+  --color-surface-400: #a3a3a3;
+  --color-surface-500: #737373;
+  --color-surface-600: #525252;
+  --color-surface-700: #404040;
+  --color-surface-800: #262626;
+  --color-surface-900: #171717;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-card-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-primary {
+  @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+}
+
+@utility btn-secondary {
+  @apply btn bg-surface-100 text-surface-700 hover:bg-surface-200 focus:ring-surface-400;
+}
+
+@utility btn-outline {
+  @apply btn border border-surface-300 bg-white text-surface-700 hover:bg-surface-50 focus:ring-surface-400;
+}
+
+@utility input {
+  @apply w-full px-4 py-2.5 text-sm bg-white border border-surface-300 rounded-lg placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+}
+
+@utility input-error {
+  @apply border-red-500 focus:ring-red-500;
+}
+
+@utility label {
+  @apply block text-sm font-medium text-surface-700 mb-1.5;
+}
+
+@utility card {
+  @apply bg-white rounded-xl border border-surface-200 shadow-card hover:shadow-card-hover transition-shadow duration-200;
+}
+
+@utility badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+@utility badge-high {
+  @apply badge bg-red-50 text-red-700 border border-red-200;
+}
+
+@utility badge-medium {
+  @apply badge bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+@utility badge-low {
+  @apply badge bg-green-50 text-green-700 border border-green-200;
+}
+
+@utility badge-urgent {
+  @apply badge bg-red-100 text-red-800 border border-red-300;
+}
+
+@utility badge-assigned {
+  @apply badge bg-blue-50 text-blue-700 border border-blue-200;
+}
+
+@utility badge-in_progress {
+  @apply badge bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+@utility badge-completed {
+  @apply badge bg-green-50 text-green-700 border border-green-200;
+}
+
+@utility badge-cancelled {
+  @apply badge bg-surface-100 text-surface-600 border border-surface-200;
+}

@@ -1,0 +1,5 @@
+﻿[INDEX] JWT_SECRET loaded: YES (length: 47)
+[INDEX] PORT: 3001
+[INDEX] FRONTEND_URL: http://localhost:5173
+[AUTH MIDDLEWARE] JWT_SECRET loaded: YES (length: 47)
+≡ƒÜÇ Backend running on http://localhost:3001
