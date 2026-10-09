@@ -70,10 +70,10 @@ export const authApi = {
       body: JSON.stringify({ username, email, mobile, password, confirmPassword }),
     }),
 
-  citizenRegister: (name, email, password, confirmPassword) =>
+  citizenRegister: (name, email, mobile, password, confirmPassword) =>
     request('/auth/citizen/register', {
       method: 'POST',
-      body: JSON.stringify({ name, email, password, confirmPassword }),
+      body: JSON.stringify({ name, email, mobile, password, confirmPassword }),
     }),
 
   citizenLogin: (email, password) =>

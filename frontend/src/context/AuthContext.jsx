@@ -60,10 +60,10 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const registerCitizen = useCallback(async (name, email, password, confirmPassword) => {
+  const registerCitizen = useCallback(async (name, email, mobile, password, confirmPassword) => {
     setError(null);
     try {
-      const data = await authApi.citizenRegister(name, email, password, confirmPassword);
+      const data = await authApi.citizenRegister(name, email, mobile, password, confirmPassword);
       localStorage.setItem('citizen_token', data.token);
       localStorage.removeItem('auth_token');
       localStorage.removeItem('supervisor_token');
