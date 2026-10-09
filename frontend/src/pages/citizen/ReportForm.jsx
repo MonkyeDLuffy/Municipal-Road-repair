@@ -71,8 +71,18 @@ export function ReportForm() {
     setError('');
     setSubmitSuccess(false);
 
-    if (!title.trim() || !locationText.trim()) {
-      setError('Title and location are required');
+    if (!title.trim()) {
+      setError('Title is required');
+      return;
+    }
+
+    if (description.trim().length < 10) {
+      setError('Description must be at least 10 characters');
+      return;
+    }
+
+    if (!locationText.trim()) {
+      setError('Location is required');
       return;
     }
 
