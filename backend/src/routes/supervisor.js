@@ -292,7 +292,7 @@ router.patch('/reports/:id/approve', async (req, res) => {
             priority: 'MEDIUM',
             status: 'assigned',
             requiredSkill: 'road_repair',
-            scheduledDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+            scheduledDate: new Date(), // current time - ensures task appears in Worker Dashboard
             startTime: '09:00',
             endTime: '15:00',
             workerId: selectedWorker.id,
