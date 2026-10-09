@@ -112,6 +112,19 @@ const createReportSchema = z.object({
 });
 
 router.post('/reports', async (req, res) => {
+  console.log('[CITIZEN REPORT] CREATE REPORT REQUEST RECEIVED');
+  console.log('[CITIZEN REPORT] authenticated user ID:', req.citizen?.id);
+  console.log('[CITIZEN REPORT] authenticated role:', req.citizen?.role);
+  console.log('[CITIZEN REPORT] received body fields:', Object.keys(req.body));
+  console.log('[CITIZEN REPORT] body.title:', req.body.title);
+  console.log('[CITIZEN REPORT] body.description:', req.body.description);
+  console.log('[CITIZEN REPORT] body.locationText:', req.body.locationText);
+  console.log('[CITIZEN REPORT] body.googleMapsUrl:', req.body.googleMapsUrl);
+  console.log('[CITIZEN REPORT] has imageBase64:', !!req.body.imageBase64);
+  console.log('[CITIZEN REPORT] has imageFileName:', !!req.body.imageFileName);
+  console.log('[CITIZEN REPORT] has imageContentType:', !!req.body.imageContentType);
+  console.log('[CITIZEN REPORT] imageContentType value:', req.body.imageContentType);
+  
   let uploadedImagePath = null;
   
   try {
@@ -182,6 +195,18 @@ router.post('/reports', async (req, res) => {
       return res.status(500).json({ error: 'Failed to generate unique report number. Please try again.' });
     }
 
+    console.log('[CITIZEN REPORT] About to create report in Prisma');
+    console.log('[CITIZEN REPORT] reportNumber:', reportNumber);
+    console.log('[CITIZEN REPORT] citizenId:', citizenId);
+    console.log('[CITIZEN REPORT] title:', data.title);
+    console.log('[CITIZEN REPORT] description:', data.description);
+    console.log('[CITIZEN REPORT] locationText:', data.locationText);
+    console.log('[CITIZEN REPORT] googleMapsUrl:', googleMapsUrl);
+    console.log('[CITIZEN REPORT] imagePath:', imagePath);
+    console.log('[CITIZEN REPORT] imageUrl:', imageUrl);
+    console.log('[CITIZEN REPORT] imageSize:', imageSize);
+    console.log('[CITIZEN REPORT] status:', 'submitted');
+
     const report = await prisma.report.create({
       data: {
         reportNumber,
@@ -221,6 +246,12 @@ router.post('/reports', async (req, res) => {
     if (uploadedImagePath) {
       await deleteTemporaryImage(uploadedImagePath);
     }
+    
+    console.error('[CITIZEN REPORT] CREATE REPORT ERROR:', error);
+    console.error('[CITIZEN REPORT] ERROR NAME:', error.name);
+    console.error('[CITIZEN REPORT] ERROR MESSAGE:', error.message);
+    console.error('[CITIZEN REPORT] ERROR CODE:', error.code);
+    console.error('[CITIZEN REPORT] STACK:', error.stack);
     
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.errors[0].message });

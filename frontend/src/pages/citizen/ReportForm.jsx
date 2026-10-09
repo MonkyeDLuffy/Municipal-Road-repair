@@ -114,7 +114,14 @@ export function ReportForm() {
         navigate(`/citizen/reports/${result.report.id}`, { replace: true });
       }, 1500);
     } catch (err) {
-      setError(err.message);
+      console.error('[CITIZEN REPORT] API ERROR:', err);
+      console.error('[CITIZEN REPORT] ERROR MESSAGE:', err.message);
+      console.error('[CITIZEN REPORT] ERROR NAME:', err.name);
+      console.error('[CITIZEN REPORT] ERROR STATUS:', err.status);
+      console.error('[CITIZEN REPORT] ERROR DATA:', err.data);
+      
+      // Show friendly UI message but log real error for debugging
+      setError(err.message || 'Failed to create report. Please try again.');
     } finally {
       setIsLoading(false);
     }

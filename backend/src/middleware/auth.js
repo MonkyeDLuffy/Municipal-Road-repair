@@ -18,7 +18,7 @@ export function generateToken(user) {
   return jwt.sign(
     { userId: user.id, employeeId: user.employeeId, role: user.role },
     JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+    { expiresIn: '24h' }
   );
 }
 
